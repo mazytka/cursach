@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine, text
-
-engine = create_engine('mysql+pymysql://root:1234@127.0.0.1/парикмахерская')
+import secret_data as s
+engine = create_engine(s.DB_CONNECTION_STRING)
 
 
 def load_services_from_db():
