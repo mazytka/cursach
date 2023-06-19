@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="css/main.css">
@@ -9,8 +9,16 @@
     <title>{{ service.title }}</title>
 </head>
 <body>
-{% include 'nav.html' %}
-<h1>{{service.title}}</h1>
-{% include 'footer.html' %}
+  {% include 'nav.html' %}
+  {% include 'banner.html' %}
+  <div class="container">
+      <h1 class="text-center mb-4 mt-2" >{{service.title}}</h1>
+      <ul>
+      {% for service in servicec %}
+      <li>{{ service['types'] }} - {{service['price'] }} </li>
+      {% endfor %}
+      </ul>
+      {% include 'footer.html' %}
+  </div>
 </body>
 </html>
