@@ -4,7 +4,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="css/main.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <title>{{ service.title }}</title>
 </head>
@@ -14,25 +13,23 @@
     <div class="container">
         <h1 class="text-center mb-4 mt-2" >{{service.title}}<br> Мастер - {{master.name}} {{master.surname}} {{master.patronymic}}</h1>
         <div class="row">
-            <div class="col-4 mt-5">
-                <ul>
-                    {% for service in servicec %}
-                    <li>{{ service['types'] }} - {{service['price'] }} рублей </li>
-                    {% endfor %}
-                </ul>
+            <div class="grid gap-3 col-4 mx-auto p-3">
+                {% for service in servicec %}
+                <div class="p-2">{{ service['types'] }} - {{service['price'] }} рублей</div>
+                {% endfor %}
             </div>
 
-            <div class="col-5">
+            <div class="col-6">
                 {% if service['id'] == 2 %}
                 <img class="img-fluid" id="manicure" src="static/manicure.jpg" width="300">
                 {% endif %}
 
                 {% if service['id'] == 1 %}
-                <img class="img-fluid" id="hairdresser" src="static/hairdresser.jpg" width="300">
+                <img class="img-fluid" id="hairdresser" src="static/hairdresser_2.jpg" width="400">
                 {% endif %}
 
                 {% if service['id'] == 3 %}
-                <img class="img-fluid" id="visagiste" src="static/visagiste.jpg" height="30">
+                <img class="img" id="visagiste" src="static/alena-plotnikova-H3bUio5s0g0-unsplash.jpg" height="400">
                 {% endif %}
             </div>
         </div>
