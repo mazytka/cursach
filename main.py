@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request, jsonify
 import database as db
 
-
 app = Flask(__name__)
 
 
@@ -24,7 +23,14 @@ def show_service(id):
 @app.route("/<id>/apply", methods=['post'])
 def apply(id):
     data = request.form
-    return render_template('application_submitted.html', data=data)
+    service = db.load_service_from_db(id)
+    master = db.load_master_from_db(id)
+    db.add_application_to_db(id, id, data)
+    db.add_client_to_db(data)
+    return render_template('application_submitted.html', data=data, master=master, service=service)
+
+
+
 
 
 if __name__ == "__main__":

@@ -1,23 +1,23 @@
 <h4>Форма заявки на запись</h4>
 <form action="/{{service['id']}}/apply" method="post">
     <div>
-        <label> имя </label><br>
-        <input type="text" name="name" placeholder="Иван Иванов">
-    </div>
-
-    <div>
-        <label>Фамилия</label><br>
-        <input type="text" name="surname">
-    </div>
-
-    <div>
-        <label>Отчество</label><br>
-        <input type="text" name="patronymic">
+        <label>Полное имя </label><br>
+        <input type="text" required name="full_name" placeholder="Иван Иванов">
     </div>
 
     <div>
         <label>Телефон</label><br>
-        <input type="text" name="phone">
+        <input type="text" required name="phone" placeholder="8 900 555 55-55">
+    </div>
+
+     <div>
+        <label>Выбранная услуга</label><br>
+        <input type="text" required name="service" placeholder="Введите услугу">
+    </div>
+
+    <div>
+        <label for="localdate">Дата и время: </label><br>
+        <input type="datetime-local" required  id="localdate" name="date">
     </div>
 
     <input type="submit">

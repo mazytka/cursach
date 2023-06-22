@@ -10,17 +10,20 @@
 <body>
     {% include 'nav.html' %}
     {% include 'banner.html' %}
-    <h4>name</h4>
-    <div>{{data.name}}</div>
+    <h4>Полное имя</h4>
+    <div>{{data.full_name}}</div>
 
-    <h4>surname</h4>
-    <div>{{data.surname}}</div>
+    <h4>Мастер</h4>
+    <div>{{master.name}} {{master.surname}} {{master.patronymic}}</div>
 
-    <h4>patronymic</h4>
-    <div>{{data.patronymic}}</div>
+    <h4>Услуга</h4>
+    <div>{{service.title}}</div>
 
-    <h4>phone</h4>
+    <h4>Номер телефона</h4>
     <div>{{data.phone}}</div>
+
+    <h4>Дата и время</h4>
+    <div>{{data.date}}</div>
     {% include 'footer.html' %}
 </body>
 </html>

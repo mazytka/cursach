@@ -2,7 +2,7 @@ from sqlalchemy import create_engine, text
 import secret_data as s
 
 
-engine = create_engine(s.DB_CONNECTION_STRING)
+engine = create_engine(s.DB_CONNECTION_STRING, pool_pre_ping=True)
 
 
 def load_services_from_db():
@@ -28,7 +28,7 @@ def load_service_from_db(id):  # функция выводит
 
 def load_master_from_db(id):
     with engine.connect() as conn:
-        result = conn.execute(text(f"select title, name, surname, patronymic from service INNER JOIN master ON (service.idmaster=master.id) where service.id = {id}"))
+        result = conn.execute(text(f"select master.id, title, name, surname, patronymic from service INNER JOIN master ON (service.idmaster=master.id) where service.id = {id}"))
         rows = []
         for row in result.all():
             rows.append(row._mapping)
@@ -55,8 +55,18 @@ def load_service_price_from_db(id):  # функция выводит услуг�
     return services
 
 
-def add_application_to_db():
+def add_application_to_db(id_service, id_master, data):
     with engine.connect() as conn:
-        query = text("INSERT INTO client (name, surname, patronymic, phone) VALUES ()")
+        query = text(f"INSERT INTO entry (idservice, full_name, idmaster, data) VALUES ( {id_service}, '{data['full_name']}', {id_master}, '{data['date']}' )")
+        conn.execute(query)
+        conn.commit()
+
+def add_client_to_db(data):
+    with engine.connect() as conn:
+        query = text(
+            f"INSERT INTO client (full_name, phone) VALUES ( '{data['full_name']}', '{data['phone']}')")
+        conn.execute(query)
+        conn.commit()
+
 
 
