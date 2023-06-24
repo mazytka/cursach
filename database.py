@@ -70,15 +70,37 @@ def add_client_to_db(data):
         conn.commit()
 
 
-def add_user(name, email, hpsw):
+def add_user(email, password):
     with engine.connect() as conn:
-        tm = math.floor(time.time())
-        query = text(f"INSERT INTO users (full_name, email, psw, time) VALUES ('{name}', '{email}', '{hpsw}', '{tm}')")
+
+        query1 = text(f"select count(useraname) as 'count' from user where useraname = '{email}'")
+        result = conn.execute(query1)
+        if result.fetchone()[0] > 0:
+            return False
+
+        query = text(f"INSERT INTO user (useraname, password) VALUES ('{email}', '{password}')")
         conn.execute(query)
         conn.commit()
     return True
 
+def get_user(user_id):
+    with engine.connect() as conn:
+        query = text(f"select * from user where id = '{user_id}' LIMIT 1")
+        result = conn.execute(query).fetchone()
+        if not result:
+            print('Пользователь не найден')
+            return False
+        return result
 
+
+def get_user_by_email(email):
+    with engine.connect() as conn:
+        query = text(f"select * from user where useraname = '{email}' LIMIT 1")
+        result = conn.execute(query).fetchone()
+        if not result:
+            print('Пользователь не найден')
+            return False
+        return result
 
 
 

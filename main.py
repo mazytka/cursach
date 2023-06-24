@@ -1,17 +1,18 @@
-from flask import Flask, render_template, request, jsonify, flash, g, abort, redirect, url_for
+from flask import Flask, render_template, request, jsonify, flash, g, abort, redirect, url_for, session
 import database as db
-from UserLogin import UserLogin
-from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import LoginManager, login_user
+import mysql.connector
+
+connection = mysql.connector.connect(host='localhost',
+                                     port='3306',
+                                     database='парикмахерская',
+                                     user='root',
+                                     password='1234')
+cursor = connection.cursor()
 
 app = Flask(__name__)
 
-login_manager = LoginManager(app)
 
-@login_manager.user_loader
-def load_user(user_id):
-    print('load_user')
-    return UserLogin().fromDB(user_id, app)
+
 
 
 @app.route("/")
@@ -43,26 +44,24 @@ def apply(id):
 @app.route("/login", methods=['POST', 'GET'])
 def login():
     if request.method == 'POST':
-        user = db.get_user_by_email(request.form['email'])
-        print(user.psw)
-        if user and check_password_hash(user.psw, request.form['psw']):
-            userlogin = UserLogin().create(user)
-            print(userlogin.get_id())
-            login_user(userlogin)
-            print(3)
-            return redirect(url_for('home'))
+        username = request.form['username']
+        password = request.form['psw']
+        cursor.execute(f"SELECT * from user where useraname='{username}' and password='{password}'")
+        record = cursor.fetchone()
+        if record:
+            session['loggedin'] = True
+            session['username'] = record[1]
+            return redirect(url_for('hello'))
         else:
-            flash('Неверная пара логин/пароль', 'error')
-
-    return render_template("login.html")
-
+            flash('Пароль или email не совпадает', 'error')
+    return render_template('login.html')
 
 @app.route("/register", methods=['POST', 'GET'])
 def register():
     if request.method == 'POST':
         if request.form['psw'] == request.form['psw2']:
-            hash = generate_password_hash(request.form['psw'])
-            res = db.add_user(request.form['name'], request.form['email'], hash)
+            print(2)
+            res = db.add_user(request.form['email'], request.form['psw'])
             if res:
                 flash("Регистрация прошла успешно")
                 return redirect(url_for('login'))
