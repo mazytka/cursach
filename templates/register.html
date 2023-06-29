@@ -10,7 +10,7 @@
 <body>
 {% include 'nav.html' %}
 {% for msg in get_flashed_messages() %}
-<div>{{msg}}</div>
+<h1 class="text-center mb-4 mt-2" >{{msg}}</h1>
 {% endfor %}
 <form class="form-floating text-center  border border-primary" action="/register" method="post">
     <div class="mb-3 mt-3">
