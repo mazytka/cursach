@@ -10,6 +10,9 @@
 <body>
     {% include 'nav.html' %}
     {% include 'banner.html' %}
+    <div class="container">
+    <h1 class="text-center mb-4 mt-2">Ваша Заявка была одобрена</h1>
+    <h2>Подробная информация:</h2>
     <h4>Полное имя</h4>
     <div>{{data.full_name}}</div>
 
@@ -24,6 +27,10 @@
 
     <h4>Дата и время</h4>
     <div>{{data.date}}</div>
+    </div>
+    <div class="text-center">
+     <button class="btn-lg btn"><a href="{{url_for('hello')}}">На главную</a></button>
+     </div>
     {% include 'footer.html' %}
 </body>
 </html>
