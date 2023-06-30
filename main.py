@@ -55,7 +55,7 @@ def login():
             return redirect(url_for('hello'))  # В случае удачной авторизации перенаправляет пользователя на главную
             # страницу
         else:
-            flash('Пароль или email не совпадает', 'error')
+            flash('Пароль или email не совпадают', 'error')
     return render_template('login.html')
 
 

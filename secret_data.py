@@ -1,0 +1,1 @@
+DB_CONNECTION_STRING = 'mysql+pymysql://root:1234@127.0.0.1/парикмахерская'
